@@ -1,0 +1,50 @@
+{% load i18n %}
+<ul class="nav">
+    <li class="active"><a href="/">{% trans "Home" %}</a></li>
+    {% if not user.is_authenticated %}
+        <li><a href="{% url 'login' %}">{% trans "Login" %}</a></li>
+        <li><a href="{% url 'signup' %}">{% trans "Sign up" %}</a></li>
+    {% endif %}
+</ul>
+
+<ul class="nav pull-right">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Language" %}<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+	        {% for lang in LANGUAGES %}
+	            <li>
+                    <form name="setLang{{ lang.1}}" action="/i18n/setlang/" method="POST">{% csrf_token %}
+                        <input name="next" type="hidden" value="/" />
+                        <input type="hidden" name="language" value="{{ lang.0 }}" />
+                        <a href="#" onclick="document.setLang{{ lang.1 }}.submit();return false;">{{ lang.1 }}</a>
+                    </form>
+                </li>
+            {% endfor %}    
+	    </ul>
+    </li>
+</ul>
+
+{% if user.is_authenticated %}
+    <ul class="nav pull-right">
+        <li><a href="{% url 'profile_overview' %}">{% trans "Profile" %}</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% if user.get_profile.firstname %}
+                    {{ user.get_profile.firstname }} {{ user.get_profile.surname }}
+	            {% else %}
+	                {{ user.username }}
+	            {% endif %}
+	            <b class="caret"></b>
+	        </a>
+	        <ul class="dropdown-menu">
+	            {% if user.is_staff %}
+	                <li><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a></li>
+	                <li><a href="{% url 'create-space' %}">{% trans "Create new space" %}</a></li>
+	            {% endif %}
+	            <li><a href="{% url 'profile_edit_personal' %}">{% trans "Edit profile" %}</a></li>
+	            <li class="divider"></li>
+	            <li><a href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
+	        </ul>
+        </li>
+    </ul>
+{% endif %}
