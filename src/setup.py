@@ -6,9 +6,9 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'e-cidadania',
-    description=("The goal of this project is to create a framework for "
-                 "representing Open Source contribution workflows, such as"
-                 " the existing Google Summer of Code TM (GSoC) program."),
+    description=("e-cidadania is a project to develop an open source "
+		 "application for citizen participation, usable by "
+		 "associations, companies and administrations."),
     version = 'UNKNOWN',
     packages = find_packages(exclude=['parts']),
     author='oscar',
