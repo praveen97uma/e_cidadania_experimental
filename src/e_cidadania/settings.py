@@ -160,7 +160,15 @@ THIRDPARTY_APPS = (
     'e_cidadania.apps.userprofile',
     'e_cidadania.apps.tagging',
     #'django_extensions',
+    'django_nose',
+    'nose_exclude',
 )
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_PLUGINS = ['nose_exclude.NoseExclude']
+
+
+NOSE_ARGS = ['--exclude-dir=apps/tagging']
 
 ECIDADANIA_MODULES = (
     # Modules created for e-cidadania and installed by default. You can add
